@@ -1,11 +1,11 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
-      <div class="container">
-          <%= link_to "Guild App", 'root_path', id: "logo" %>
+      <div class="container">         
         <nav>
+             <%= link_to image_tag("murlock_copy_small.jpg", alt: "Guild logo"), root_path, id: "logo" %>
           <ul class="nav navbar-nav navbar-right">
-            <li><%= link_to "Home",   'root_path' %></li>
-              <li><%= link_to "About Us",   'help_path' %></li>
-            <li><%= link_to "Log in", '#' %></li>
+              <li><%= link_to "Home",   root_path %></li>
+              <li><%= link_to "About Us",   about_path %></li>
+            <li><%= link_to "Log in", signup_path %></li>
           </ul>
         </nav>
       </div>
