@@ -5,9 +5,14 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <%= favicon_link_tag 'murlock_tab.png' %>
   <%= render 'layouts/shim' %>
 </head>
+
+
 <body>
+
+</video>
      <%= render 'layouts/header' %>
     <div class="container">
       <%= yield %>
