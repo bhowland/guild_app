@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'reply_messages/new'
+
+  get 'messages/new'
+
+  get 'users/new'
+
   root 'static_pages#index'
   get 'about'   => 'static_pages#about_us'
   get 'contact' => 'static_pages#contact'
