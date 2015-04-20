@@ -1,0 +1,98 @@
+<div id="feedText1"></div>
+<style type="text/css">
+.feedTitle { color: #999999; }
+.feedDate { color: #3A5894; }
+.feedDesc { color: #999999; padding: 5px; }
+.feedDesc img { max-width: 550px; }
+
+#feedText1 {font-size: 12pt;}
+#feedText1 a:link { color: #3A5894; text-decoration: none; }
+#feedText1 a:visited { color: #354973; text-decoration: none; }
+#feedText1 a:hover { color: #354973; text-decoration: none; }
+#feedText1 a:active { color: #3A5894; text-decoration: none; }
+
+.tooltip td { background: transparent url(http://i201.photobucket.com/albums/aa236/Mottie1/testsite/styles/tooltip.png);}
+
+.tooltip {empty-cells: show; border-collapse:collapse; border-spacing:0;}
+.tooltiplt {padding: 10px;}
+.tooltiprt {background-position: right top !important;}
+.tooltiplb {background-position: left bottom !important;}
+.tooltiprb {background-position: right bottom !important;}
+</style>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load("feeds", "1");
+$(document).ready(function() {
+var myfeeds = new Array();
+
+var feedBox = "feedText1";
+var tooltipWidth = 560;
+
+var previewMode = true;
+var previewLength = 500;
+var readMoreMessage = "...<br><br><img align=right src=http://i201.photobucket.com/albums/aa236/Mottie1/testsite/styles/moreinfo.gif>";
+
+myfeeds.push (["Digg Stories/Popular","http://www.digg.com/rss/index.xml",5]);
+myfeeds.push (["WoW Blues Comments","http://www.wowblues.com/feed.xml",6]);
+//myfeeds.push (["New Movies this week","http://us.rd.yahoo.com/movies/rss/thisweek/?http://rss.ent.yahoo.com/movies/thisweek.xml",7]);
+myfeeds.push (["Warhammer Current News","http://feeds.warhammeronline.com/warherald/RSSFeed.war?type=current",10]);
+
+// **************************************
+// Do not change anything below this line
+// **************************************
+var ttcss = "#dhtmltooltip";
+var ttBrdr = $(ttcss).css("border-width");
+var ttBkgd = $(ttcss).css("background-color");
+$("#"+feedBox)
+ .mouseover(function(){$(ttcss).css("border-width","0").css("background-color","transparent")})
+ .mouseout (function(){$(ttcss).css("border-width",ttBrdr).css("background-color",ttBkgd)});
+ for (var k = 0; k < myfeeds.length; k++) {
+  feedResult(myfeeds[k]);
+ }
+function feedResult(currentFeed) {
+ var feed = new google.feeds.Feed(currentFeed[1]);
+ feed.setResultFormat(google.feeds.Feed.XML_FORMAT);
+ feed.setNumEntries(currentFeed[2]);
+ feed.load(function(result) {
+  if (!result.error) {
+   var ftitle = (currentFeed[0] == "") ? (result.xmlDocument.getElementsByTagName("title")[0].firstChild.nodeValue) : (currentFeed[0]);
+   var feedText = "<div class='feedTitle'>" + ftitle + "</div>";
+   var items = result.xmlDocument.getElementsByTagName("item");
+
+   for (var j = 0; j < items.length; j++) {
+    var titleElement = items[j].getElementsByTagName("title")[0];
+    var xtitle = titleElement.firstChild.nodeValue;
+
+    var titleElement = items[j].getElementsByTagName("link")[0];
+    try {var xlink = titleElement.firstChild.nodeValue;} catch(e) {xlink = "";}
+
+    var titleElement = items[j].getElementsByTagName("pubDate")[0];
+    try {var pubDate = titleElement.firstChild.nodeValue;} catch(e) {pubDate = "";}
+
+    var titleElement = items[j].getElementsByTagName("description")[0];
+    try {var descript = titleElement.firstChild.nodeValue;} catch(e) {descript = "";}
+
+    pubDate = pubDate.replace(/'/g,"&rsquo;").replace(/\"/g,"&quot;");
+    descript = descript.replace(/'/g,"&rsquo;").replace(/\"/g,"&quot;");
+/*
+    if (previewMode) {
+     var dStart = descript.indexOf("<br>") + previewLength;
+     if (descript.length > dStart) {descript = descript.substring(0,dStart) +  readMoreMessage;}
+    }
+
+    var feedPopup = '<div><table class=tooltip><tbody><tr><td class=tooltiplt>';
+    feedPopup += '<div class=feedDate>' + pubDate + '</div><div class=feedDesc>' + descript + '</div>';
+    feedPopup += '</td><td class=tooltiprt>&nbsp;</td></tr><tr><td class=tooltiplb>&nbsp;</td>';
+    feedPopup += '<td class=tooltiprb>&nbsp;</td></tr></tbody></table></div>';
+
+    feedText += (j % 2 == 0) ? '<div class=NormGridRow>' : '<div class=AltGridRow>';
+    feedText += '<a href="' + xlink + '" =\"ddrivetip(\'' + feedPopup + '\', \'\', \'';
+    feedText += tooltipWidth + '\');\" ="hideddrivetip();">' + xtitle + '</a></div>';
+   }
+   feedText += '<br>';
+   document.getElementById(feedBox).innerHTML += feedText;
+  } else { alert ("feed error from " + currentFeed[0]); }*/
+ });
+ }
+});
+</script>
