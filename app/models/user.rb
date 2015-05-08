@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
     has_many :message
     has_many :reply_message
   attr_accessor :remember_token, :activation_token, :reset_token
+  # Good job using methods here for your callbacks
   before_save   :downcase_email
   before_create :create_activation_digest
   validates :name,  presence: true, length: { maximum: 50 }
